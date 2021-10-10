@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>admin1</title>
+</head>
+
+<body><!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Iniciar Sesión</title>
+    <script src="{{ url_for('static', filename='js/funciones.js') }}"> </script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/miEstilo2.css') }}" />
+  </head>
+  <body>
+
+    <div class="login-box">
+      <!--<img src="../static/img/Grupo8.jpeg" class="avatar" alt="Avatar Image">-->
+      <img src="{{ url_for('static', filename='img/Grupo8.jpeg') }}" class="avatar" alt="Avatar Image">
+      <h1>Universidad Bolivariana</h1>
+      <h2>Iniciar Sesión</h2>
+
+  <form name="formularioRegistro" onsubmit="return validaarFormulario()" method="post">
+  <table width="497" height="144" border="0">
+    <tbody>
+      <tr>
+        <td width="292"><!-- ID INPUT -->
+        <label for="id">Identificación:</label>
+        <p><input type="text" name="id" placeholder="Ingrese la  identificación"> <span class="error" id="errorId"></span></td></p>
+
+        <td width="189"><!-- USERNAME INPUT -->
+        <label for="username">Nombre y Apellidos:</label>
+        <p> <input type="text" placeholder="Ingrese el nombre" name="username" > <span class="error" id="errorName"></span></td></p>
+      </tr>
+      <tr>
+        <td><!--  ROL SELECT -->
+           <label for="rol">Privilegios:</label>
+          <p> <select type="text" name="rol"  id="rol" > <span class="error" id="errorRol"></span></p>
+          <option hidden selected >Seleccione un Rol</option>
+          <option value="admin">Administrador</option>
+          <option value="dte">Docente</option>
+          <option value="est">Estudiante</option>
+        </select>
+      </td>
+
+        <td><!-- ID CURSO -->
+          <label for="curso">Curso:</label>
+            <p> <select type="text" name="curso"  id="curso"> <span class="error" id="errorCurso"></span></p>
+            <option hidden selected >Seleccione un curso</option>
+            <option value="23">23-G8</option>
+            <option value="24">24-G2</option>
+            <option value="25">25-G4</option>
+          </select>
+      </tr>
+      <tr>
+        <td><!-- ID EMAIL -->
+          <label for="correo">Email:</label>
+          <p> <input type="text" name="correo" placeholder="Ingrese el Email"></td> <span class="error" id="errorEmail"></span></p>
+
+        <td><!-- PASSWORD INPUT -->
+        <label for="password">Contraseña:</label>
+        <p></p><input type="password" name="password" placeholder="Ingrese la Contraseña" > <span class="error" id="errorPassword"></span></p>
+      </td>
+      </tr>
+      <tr>
+        <td align="right"><input type="submit" name="submit" id="submit" value="Registrar"></td>
+        <td align="right"><input type="reset" name="reset" id="reset" value="Cancelar"></td>
+      
+    </tr>
+  </tbody>
+</table>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+</body>
+</html>
