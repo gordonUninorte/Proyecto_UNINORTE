@@ -1,4 +1,4 @@
-# Proyecto_UNINORTE
+# Proyecto_UNINORTE Grupo No.23 Equipo No. 8
 
 - Descripcion del proyecto :
 
