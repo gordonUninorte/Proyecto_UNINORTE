@@ -20,14 +20,15 @@
 			<!-- SideBar User info -->
 		<div class="full-box dashboard-sideBar-UserInfo">
 				<figure class="full-box">
-					<img src="{{ url_for('static', filename='./assets/img/Jesus.jpg') }}" alt="UserIcon">
-					<figcaption class="text-center text-titles">Nombre del Docente</figcaption>
+					<img src="{{ url_for('static', filename='./assets/img/Lila.jpg') }}" alt="UserIcon">
+					<figcaption class="text-center text-titles">Lila Sarmiento Ortega</figcaption>
+					<figcaption class="text-center text-titles">Docente</figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
 					<li>
-						<a href="#!">
+						<!-- <a href="#!">
 							<i class="zmdi zmdi-settings"></i>
-						</a>
+						</a> -->
 					</li>
 					<li>
 						<a href="#!" class="btn-exit-system">
@@ -39,7 +40,7 @@
 		  <!-- SideBar Menu -->
 		  <ul class="list-unstyled full-box dashboard-sideBar-Menu">
 			  <li>
-				  <a href="/home_docentes">
+				  <a href="home_docentes">
 					  <i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i> Dashboard
 				  </a>
 			  </li>
@@ -49,24 +50,21 @@
 				  </a>
 				  <ul class="list-unstyled full-box">
 					  <li>
-						  <a href="period.html"><i class="zmdi zmdi-timer zmdi-hc-fw"></i> Período</a>
+						  <a href="Crear_actividades"><i class="zmdi zmdi-font zmdi-hc-fw"></i> Crear Actividades</a>
 					  </li>
+					  <!--li>
+						  <a href="materia"><i class="zmdi zmdi-book zmdi-hc-fw"></i> Ver Materias</a>
+					  </li-->
 					  <!-- <li>
-						  <a href="subject.html"><i class="zmdi zmdi-book zmdi-hc-fw"></i> Materia</a>
+						  <a href="facultad"><i class="zmdi zmdi-graduation-cap zmdi-hc-fw"></i> Facultad</a>
 					  </li> -->
 					  <li>
-						  <a href="admin_docentes"><i class="zmdi zmdi-book zmdi-hc-fw"></i> Calificar Actividad</a>
-					  </li>
-					   <!-- <li>
-						  <a href="section.html"><i class="zmdi zmdi-graduation-cap zmdi-hc-fw"></i> Facultad</a>
-					  </li> -->
-					  <li>
-						  <a href="salon.html"><i class="zmdi zmdi-font zmdi-hc-fw"></i> Grupo</a>
+						  <a href="evaluar_actividades"><i class="zmdi zmdi-face zmdi-hc-fw"></i> Evaluar Actividades</a>
 					  </li>
 				  </ul>
 			  </li>
-			  <li>
-				  <!-- <a href="#!" class="btn-sideBar-SubMenu">
+			  <!-- <li>
+				  <a href="#!" class="btn-sideBar-SubMenu">
 					  <i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Gestionar Administrador<i class="zmdi zmdi-caret-down pull-right"></i>
 				  </a>
 				  <ul class="list-unstyled full-box">
@@ -77,47 +75,36 @@
 					  <li>
 						  <a href="edit_admin"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Editar Administrador</a>
 					  </li>		
-				  </ul> -->
-			  </li>
+				  </ul>
+			  </li> -->
 			  <li>	
-				<li>
-					<!-- <a href="#!" class="btn-sideBar-SubMenu">
-						<i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Gestionar Docentes<i class="zmdi zmdi-caret-down pull-right"></i>
-					</a> -->
-					<ul class="list-unstyled full-box">
-						
-					
-							
-					</ul>
-				</li>
-
-				<li>
+				<!--li>
 					<a href="#!" class="btn-sideBar-SubMenu">
-						<i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Gestionar Actividades<i class="zmdi zmdi-caret-down pull-right"></i>
+						<i class="zmdi zmdi-face zmdi-hc-fw"></i> Gestionar Estudiantes<i class="zmdi zmdi-caret-down pull-right"></i>
 					</a>
 					<ul class="list-unstyled full-box">
 						
 						<li>
-							<a href="estudiante"><i class="zmdi zmdi-face zmdi-hc-fw"></i> Agregar Actividad</a>
-						</li>
-						<li>
-							<a href="edit_estudiante"><i class="zmdi zmdi-face zmdi-hc-fw"></i> Editar Actividad</a>
-						</li>
+							<a href="Editar_nota"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Editar Evaluación</a>
+						</li-->
+						<!-- <li>
+							<a href="edit_estudiante"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Editar Estudiante</a>
+						</li> -->
 						
 					</ul>
 				</li>
 
 				<li>	
-			  <li>
-				  <!-- <a href="#!" class="btn-sideBar-SubMenu">
+			  <!-- <li>
+				  <a href="#!" class="btn-sideBar-SubMenu">
 					  <i class="zmdi zmdi-shield-security zmdi-hc-fw"></i> Configurar Institución <i class="zmdi zmdi-caret-down pull-right"></i>
 				  </a>
 				  <ul class="list-unstyled full-box">
 					  <li>
 						  <a href="school.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i> Datos de la Institución</a>
-					  </li> -->
+					  </li>
 				  </ul>
-			  </li>
+			  </li> -->
 		  </ul>
 		</div>
 	</section>
@@ -142,16 +129,14 @@
 		<!-- Content page -->
 		<div class="container-fluid">
 			<div class="page-header">
-			  <h1 class="text-titles">Curso <small>Materia</small></h1>
+			  <h1 class="text-titles">Sistema <small>Administrativo</small></h1>
 			</div>
 		</div>
 		<div class="full-box text-center" style="padding: 115px 10px;">
 		</div>
 <!--################################################################################## -->
 
-
-
-<!-- ################### Pegar aquí e. código de Admin_docentes.html####################### -->
+<!--#######################  COLOCAR AQUÍ CONTENIDO DESEADO  ############################### -->	
 
 
 
