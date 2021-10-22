@@ -10,6 +10,7 @@ def index():
         cad= request.form['username']        
         
         cad= cad + "-" +request.form['password']
+        
         if((request.form['username'] == 'jesus@equipo8.edu.co') & (request.form['password']=='Prueba123')): 
             return render_template('home_admin.html')#'Hola, Mundo!'
         elif((request.form['username'] == 'Lila@equipo8.edu.co') & (request.form['password']=='Prueba123')): 
