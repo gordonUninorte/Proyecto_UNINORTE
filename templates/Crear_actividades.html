@@ -158,15 +158,13 @@
 		
     </tr>
     <tr>
-      <!-- <td><label for="username">Curso:</label>
-		<p> <input type="text" placeholder="Nombre del curso" name="username" > <span class="error" id="errorName"></span></td> -->
 		<td><!-- Materia -->
 			<label for="materia">Materia:</label>
 				<p> <select type="text" name="curso"  id="curso"> <span class="error" id="errorCurso"></span></p>
+					{% for Materias in lista %}
 				<option hidden selected >Seleccione una Materia</option>
-				<option value="23">Programación Python</option>
-				<option value="24">Inglés</option>
-				<option value="25">Habilidades Personales</option>
+				<option value="{{ Materias['Materias'] }}">{{ Materias['Materias'] }}</option>
+				{% endfor %}
 			</select>
 		
       <td height="60">&nbsp;</td>
@@ -177,10 +175,10 @@
 		<td><!-- ID CURSO -->
 			<label for="curso">Curso:</label>
 				<p> <select type="text" name="curso"  id="curso"> <span class="error" id="errorCurso"></span></p>
+				{% for cursos in lista1 %}
 				<option hidden selected >Seleccione un curso</option>
-				<option value="23">23-G8</option>
-				<option value="24">24-G2</option>
-				<option value="25">25-G4</option>
+				<option value="{{ cursos['cursos'] }}">{{ cursos['cursos'] }}</option>
+				{% endfor %}
 			</select>
 
 
