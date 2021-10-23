@@ -11,40 +11,6 @@ salt = "Equipo8"
 
 main= blueprints.Blueprint('main', __name__)
 
-# @main.route('/', methods=('GET', 'POST'))          	
-# def hola_mundo():   
-
-#     if(request.method=='POST'):
-#         cad=""
-    
-        
-#         cad= request.form['correo']        
-#         cad= cad + "-" +request.form['userPassword']
-#         if((request.form['correo'] == 'jesus@equipo8.edu.co') & (request.form['userPassword']=='Prueba123')): 
-#             return render_template('home_admin.html')#'Hola, Mundo!'
-#         elif((request.form['correo'] == 'lila@equipo8.edu.co') & (request.form['userPassword']=='Prueba123')): 
-#             return render_template('home_docentes.html')#'Hola, Mundo!'
-
-#         else:
-#             return render_template('login.html')
-        
-#     return render_template('login.html')#'Hola, Mundo!'
-
-@main.route( '/' )
-def hello_world():
-    """Función que maneja la raiz del sitio web.
-
-        Parameters:
-        Ninguno
-
-        Returns:
-        Plantilla index.html
-
-    """
-
-    return render_template('login.html')
-
-
 def login_required(view):
 
     @functools.wraps(view)
@@ -55,12 +21,17 @@ def login_required(view):
     
     return wraped_view
 
-@main.route('/home_admin', methods=('GET', 'POST'))
+@main.route('/home_admin')
 def home_admin():
     
     return render_template("home_admin.html")
 
+@main.route('/home_estudiante')
+def home_estudiante():
+    
+    return render_template("home_estudiante.html")
 
+@main.route( '/', methods=['GET', 'POST'] )
 @main.route('/login/', methods=['GET', 'POST'])
 def login():
     """Función que maneja la ruta login.Responde a los métodos GET y POST.
@@ -73,8 +44,12 @@ def login():
         Redirecciona a  main.ajax si es invocada con POST y la validación es verdadera.
 
     """
+    print("entro a login")
+    
 
     if request.method =='POST':
+        
+        print("entro a POST")
 
         correo = escape(request.form['correo'])
         password =  escape(request.form['userPassword'])
@@ -86,6 +61,8 @@ def login():
 
 
         if user is not None:
+            
+            print("entro a USER")
 
             print(user[4])# las columnas de la base de datos se enumeran desde 0, la clave está en la columna4
             #agregamos SALT
@@ -97,30 +74,22 @@ def login():
                 session['correo'] = user[4]
                 session['nombre'] = user[3]
                 session['identificacion'] = user[2]
-                session['id_rol'] = 'Administrador'
                 session['id_usuario'] = user[0]
-                
-                print(session['nombre'])
-                           
-                
-                # return redirect(url_for('main.ajax'))
-                return redirect(url_for('home_admin.html'))
-            # return render_template('home_admin.html')
+                session['id_rol'] = user[1]  
+                if(user[1] == 'Administrador'):         
+                    return redirect(url_for('main.home_admin'))
+                elif(user[1] == 'Docente'):           
+                    return redirect(url_for('main.home_docentes'))
+                elif(user[1] == 'Estudiante'):           
+                    return redirect(url_for('main.home_estudiante'))              
+            
 
         flash('Usuario o clave incorrectos.', 'errodeLogin')
         return render_template('login.html')
 
     return render_template('login.html')
 
-
-
-
-
 #   ###############################   INGRESAR USUARIOS  ###############################      
-# @main.route('/home_admin', methods=('GET', 'POST'))
-# def home_admin():
-    
-#     return render_template("home_admin.html")
 
 @main.route('/admin', methods=('GET', 'POST'))
 def admin():
@@ -159,7 +128,7 @@ def admin():
 
 #################################################### MOSTRAR DOCENTES  ####################
 
-@main.route('/home_docentes', methods=('GET', 'POST'))
+@main.route('/home_docentes', methods=['GET', 'POST'])
 def home_docentes():
 
     

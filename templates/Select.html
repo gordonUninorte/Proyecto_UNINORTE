@@ -198,3 +198,13 @@ def usuarios():
 
 
      return render_template('listado.html', lista = listado )
+
+
+
+
+     ///////////////////////// ROL  ///////////////////////////////////
+    @main.route('/admin/')
+@has_role('admin')
+@login_required
+def admin():
+     return 'Admin template'

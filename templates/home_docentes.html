@@ -22,7 +22,7 @@
 				<figure class="full-box">
 					<img src="{{ url_for('static', filename='./assets/img/Lila.jpg') }}" alt="UserIcon">
 					<!-- <figcaption class="text-center text-titles">{% for row in usuarios %} {{row[3]}} {% endfor %} </figcaption> -->
-					<figcaption class="text-center text-titles">{% for usuarios in lista %}{{ usuarios['nombre'] }} {% endfor %} </figcaption>
+					<figcaption class="text-center text-titles">{% for user[3] in session %}{{ session['nombre'] }} {% endfor %} </figcaption>
 					<figcaption class="text-center text-titles">{% for row in usuarios %} {{row[1]}} {% endfor %} </figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
