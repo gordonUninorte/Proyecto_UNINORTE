@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-from flask import Flask
-
-def create_app():
-  
-  app = Flask(__name__)
-  from views import main
-
-  app.register_blueprint(main)
-
-  return app
-=======
 ##########################  APP CON VIEWS  ############
 
 import os
@@ -38,4 +26,3 @@ def create_app():
     
     return app 
 
->>>>>>> 1b12eacb3380f60778096ea666436bf9552639e2
