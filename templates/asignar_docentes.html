@@ -22,8 +22,8 @@
 				<figure class="full-box">
 					
 					<img src="{{ url_for('static', filename='./assets/img/Jesus.jpg') }}" alt="UserIcon">
-					<figcaption class="text-center text-titles">Jesús Calvo Mejía</figcaption>
-					<figcaption class="text-center text-titles">Administrador</figcaption>
+					<figcaption class="text-center text-titles">{{session['nombre']}}</figcaption>
+					<figcaption class="text-center text-titles">{{session['id_rol']}}</figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
 					<li>
@@ -170,6 +170,15 @@
 		
       <td></td>
     </tr>
+	<tr>
+		<td width="67" align="center">
+		<label for="foto1"value="{{user1}}" name="ident"></label> </a></label></a>{{user1}} </td>
+
+		<td height="60">&nbsp;</td>
+	
+		<td width="67" align="center">
+			<label for="foto" value="{{user}}" name="username"></label> </a>{{user}} </td>
+		
     <tr>
 		<td width="67" align="center">
 			<label for="foto">Identificación del Docente</label></a> </td>
