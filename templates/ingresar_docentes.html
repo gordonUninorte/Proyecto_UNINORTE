@@ -22,8 +22,8 @@
 				<figure class="full-box">
 					
 					<img src="{{ url_for('static', filename='./assets/img/Jesus.jpg') }}" alt="UserIcon">
-					<figcaption class="text-center text-titles">Jesús Calvo Mejía</figcaption>
-					<figcaption class="text-center text-titles">Administrador</figcaption>
+					<figcaption class="text-center text-titles">{{session['nombre']}}</figcaption>
+					<figcaption class="text-center text-titles">{{session['id_rol']}}</figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
 					<li>
@@ -195,15 +195,14 @@
     <tr>
     
 		<td><label for="rol">Privilegio:</label>
-		    <p><input name="rol" type="text" placeholder="Docente" readonly="readonly" > <span class="error" id="errorRol"></span></td>
+		    <p><input name="rol" type="text" value="Docente" readonly="readonly" > <span class="error" id="errorRol"></span></td>
 		
 		
       <td>&nbsp;</td>
       
 	 <td><label for="password">Contraseña:</label>
-		<p><input type="password" name="password" placeholder="Ingrese la Contraseña" > <span class="error" id="errorPassword"></span></td>	
+		<p><input type="password" name="userPassword" placeholder="Ingrese la Contraseña" > <span class="error" id="errorPassword"></span></td>	
 		
-<!--      <td align="right"><input type="reset" name="reset" id="reset" value="Cancelar"></td>-->
     </tr>
   </tbody>
 </table>

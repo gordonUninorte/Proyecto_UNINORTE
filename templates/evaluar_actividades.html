@@ -21,8 +21,8 @@
 		<div class="full-box dashboard-sideBar-UserInfo">
 				<figure class="full-box">
 					<img src="{{ url_for('static', filename='./assets/img/Lila.jpg') }}" alt="UserIcon">
-					<figcaption class="text-center text-titles">Lila Sarmiento Ortega</figcaption>
-					<figcaption class="text-center text-titles">Docente</figcaption>
+					<figcaption class="text-center text-titles">{{session['nombre']}}</figcaption>
+					<figcaption class="text-center text-titles">{{session['id_rol']}}</figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
 					<li>
@@ -31,7 +31,7 @@
 						</a> -->
 					</li>
 					<li>
-						<a href="#!" class="btn-exit-system">
+						<a href='logout' class="btn-exit-system">
 							<i class="zmdi zmdi-power"></i>
 						</a>
 					</li>
@@ -149,18 +149,18 @@
       <td width="18" height="60"></td>
 		
 		
-      <td align="left"> <input type="submit" name="submit" id="submit" value="Buscar estudiante">   </td>
+      <td align="left"> <input type="submit" name="buscar" id="buscar" value="Buscar">   </td>
 		
       <td></td>
     </tr>
     <tr>
 		<td width="67" align="center">
-			<label for="foto">Identificación del estudiante</label></a> </td>
+			<label for="identificaion">{% for row in usuarios %} {{row[3]}} {% endfor %}</label></a> </td>
 		
       <td height="60">&nbsp;</td>
 	
       <td width="67" align="center">
-		<label for="foto">Nombre del estudiante</label></a> </td>
+		<label for="nombre">{% for row in usuarios %} {{row[2]}} {% endfor %}</label></a> </td>
 		
     </tr>
     <tr>

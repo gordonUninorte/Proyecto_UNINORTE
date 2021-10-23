@@ -13,13 +13,19 @@
       <img src="{{ url_for('static', filename='img/Grupo8.jpeg') }}" class="avatar" alt="Avatar Image">
       <h1>Universidad Bolivariana</h1>
       <h2>Iniciar Sesión</h2>
-      <form name="formularioLogin" onsubmit="return validarFormulario()" method="post">
+      <form name="formularioLogin" onsubmit="return validarFormulario()" method="POST">
         <!-- USERNAME INPUT -->
-        <label for="username">Usario:</label>
-        <input type="text" name="username" placeholder="Ingrese su Email">
+        <label for="correo">Usuario:</label>
+        <input type="text" name="correo" id="correo" placeholder="Ingrese su Email">
+        <span class="error" id="errorUsername"></span>
         <!-- PASSWORD INPUT -->
         <label for="password">Contraseña:</label>
-        <input type="password" name="password" placeholder="Ingrese su Contraseña">
+        <input type="password" name="userPassword" id="userPassword" placeholder="Ingrese su Contraseña">
+        <span class="error" id="errorPassword"></span>
+   
+
+        <!-- <button type="submit" value="Entrar" id="botonEnviar">Enviar</button> -->
+
         <input type="submit" value="Entrar">
         <!--<a href="#">Olvidaste tu contraseña?</a><br>
         <a href="#">No tienes cuenta?</a>-->

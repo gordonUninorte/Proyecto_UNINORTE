@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Ejemplo Ajax {% endblock %}
+   
+{% block contenido %}   
+<script src="{{ url_for('static', filename='js/ajax.js') }}"></script>
+<h1>Ejemplo Ajax</h1>
+
+
+<div id='respuesta'>
+
+
+</div>
+
+<div id='nuevo'>
+
+    <a href=# onclick="cargarMensaje();">nuevo</a>
+
+</div>
+
+<div id='agregar'>
+
+    <a href=# onclick="guardarMensaje();">agregar</a>
+
+</div>
+
+{% endblock %}
+   
+ 
+
+  

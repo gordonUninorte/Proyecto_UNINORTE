@@ -1,0 +1,210 @@
+-------------------listado.html----------------------------------------------
+{% extends 'base.html' %}
+
+{% block titulo %} Listado {% endblock %}
+   
+{% block contenido %}   
+<h1>Listado de Usuarios</h1>
+
+      <select>
+
+        {% for usuario in lista %}
+          <option value="{{ usuario['id'] }}">{{ usuario['nombre'] }}</option>
+        {% endfor %}
+      </select>
+
+
+      <table>
+          
+        {% for user in lista %}
+        <tr>
+              <td><p>{{ user['id'] }}</p></td>
+              <td><p>{{ user['usuario'] }}</p></td>
+              <td><p>{{ user['nombre'] }}</p></td>
+              <td><p>{{ user['correo'] }}</p></td>
+              {% if session['role'] == 'admin' %}
+                <td><p><a href=#>Editar</a></p></td>
+              {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+   
+      
+  ------------------------views.py-------------------------------------------------------------
+import functools
+from flask import Flask, render_template, blueprints, request, send_file, redirect, url_for,session, flash
+from werkzeug.security import check_password_hash, generate_password_hash
+from db import get_db
+from markupsafe import escape
+import sqlite3
+
+from formularios import formularioMensaje
+
+salt = "misiontic2022"
+
+main= blueprints.Blueprint('main', __name__)
+
+@main.route( '/' )
+def hello_world():
+    """Función que maneja la raiz del sitio web.
+
+        Parameters:
+        Ninguno
+
+        Returns:
+        Plantilla index.html
+
+    """
+
+    return render_template('index.html')
+
+
+def login_required(view):
+
+    @functools.wraps(view)
+    def wraped_view(**kwargs):
+        if 'usuario' not in session:
+            return redirect(url_for('main.login'))
+        return view(**kwargs)
+    
+    return wraped_view
+
+
+
+@main.route('/login/', methods=['GET', 'POST'])
+def login():
+    """Función que maneja la ruta login.Responde a los métodos GET y POST.
+
+        Parameters:
+        Ninguno
+
+        Returns:
+        login.html si es invocada con el método GET. 
+        Redirecciona a  main.ajax si es invocada con POST y la validación es verdadera.
+
+    """
+
+    if request.method =='POST':
+
+        usuario = escape(request.form['username'])
+        clave =  escape(request.form['userPassword'])
+        db = get_db()
+       
+        user = db.execute('select * from usuario where usuario = ? ', (usuario,)).fetchone()
+        db.commit()
+        db.close()
+
+
+        if user is not None:
+
+            print(user[4])# las columnas de la base de datos se enumeran desde 0, la clave está en la columna4
+            #agregamos SALT
+            clave = clave + usuario
+            
+            sw = check_password_hash(user[4], clave)
+
+            if(sw):
+                session['usuario'] = user[2]
+                session['nombre'] = user[1]
+                session['id'] = user[0]
+                session['role'] = 'admin'
+           
+                
+                return redirect(url_for('main.ajax'))
+
+        flash('Usuario o clave incorrectos.', 'errodeLogin')
+        return render_template('login.html')
+
+    return render_template('login.html')
+
+main.route('/registro/', methods=['GET', 'POST'])
+def registro():
+    """Función que maneja la ruta Registro.Responde a los métodos GET y POST.
+
+        Parameters:
+        Ninguno
+
+        Returns:
+        registro.html si es invocada con el método GET. 
+        Crea un usuario en la BD si es invocada con POST, no tiene válidaciones.
+
+    """
+
+    if request.method == 'POST':
+
+        nombre = escape(request.form['nombre'])
+        usuario = escape(request.form['username'])
+        correo = escape(request.form['correo'])
+        clave = escape(request.form['userPassword'])
+
+        db = get_db()
+        #agregar SLAT
+        clave = clave + usuario
+        clave = generate_password_hash(clave)
+        db.execute("insert into usuario ( nombre, usuario, correo, clave) values( ?, ?, ?, ?)",(nombre, usuario, correo, clave))
+        db.commit()
+        db.close()
+        
+
+    return render_template('registro.html')
+
+@main.route('/ajax/')
+@login_required
+def ajax():
+    """Función que maneja la ruta ajax.
+
+        Parameters:
+        Ninguno
+
+        Returns:
+        ajax.html 
+
+    """
+    return render_template('ajax.html')
+
+@main.route('/otra/')
+def otra():
+    return 'otra pagina'
+
+
+@main.route('logout')
+def logout():
+   session.clear()
+
+   return redirect(url_for('main.login'))
+
+@main.route('/mensaje/')
+def mensaje():
+    obj = formularioMensaje()
+    
+    return render_template('mensaje.html', miformulario= obj )
+
+
+@main.route('/usuarios/')
+@login_required
+def usuarios():
+   
+     db = get_db()
+     db.row_factory = sqlite3.Row
+     result = db.execute('select * from usuario').fetchall()
+     db.commit()
+     db.close()
+
+     listado = []
+     for item in result:
+         listado.append({k: item[k] for k in item.keys()})
+
+
+     return render_template('listado.html', lista = listado )
+
+
+
+
+     ///////////////////////// ROL  ///////////////////////////////////
+    @main.route('/admin/')
+@has_role('admin')
+@login_required
+def admin():
+     return 'Admin template'

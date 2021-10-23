@@ -2,12 +2,9 @@
 //window.status="Hola mundo";
 function validar()
 {
-    var userIDInput = document.formularioRegistro.id;
     var userNameInput = document.formularioRegistro.username;
-    var correoInput = document.formularioRegistro.correo;
-    var userRolInput = document.formularioRegistro.rol;
     var passWordInput = document.formularioRegistro.userPassword;
-   
+    var correoInput = document.formularioRegistro.correo;
 
     var formato_email = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 
