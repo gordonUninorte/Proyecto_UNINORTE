@@ -12,27 +12,42 @@ salt = "Equipo8"
 main= blueprints.Blueprint('main', __name__)
 
 def login_required(view):
-
+    
     @functools.wraps(view)
     def wraped_view(**kwargs):
         if 'correo' not in session:
             return redirect(url_for('main.login'))
         return view(**kwargs)
-    
+        print(session['correo'])
     return wraped_view
 
 @main.route('/home_admin')
+@login_required
 def home_admin():
     
     return render_template("home_admin.html")
 
 @main.route('/home_estudiante')
+@login_required
 def home_estudiante():
     
     return render_template("home_estudiante.html")
 
+@main.route('/asignar_docentes', methods=('GET', 'POST'))
+def asignar_docentes():
+   
+    if request.method =='POST':
+        identificacion = escape(request.form['id'])        
+        db = get_db()
+        resultado=db.execute('select nombre from usuarios where identificacion = ? ', (identificacion,)).fetchall()
+        db.commit()
+        db.close()    
+        return render_template("asignar_docentes.html", user= resultado[0][0], user1= identificacion)
+   
+    return render_template('asignar_docentes.html')
+
 @main.route( '/', methods=['GET', 'POST'] )
-@main.route('/login/', methods=['GET', 'POST'])
+#@main.route('/login/', methods=['GET', 'POST'])
 def login():
     """Función que maneja la ruta login.Responde a los métodos GET y POST.
 
@@ -92,6 +107,7 @@ def login():
 #   ###############################   INGRESAR USUARIOS  ###############################      
 
 @main.route('/admin', methods=('GET', 'POST'))
+@login_required
 def admin():
     if request.method == 'GET':
     
@@ -129,6 +145,7 @@ def admin():
 #################################################### MOSTRAR DOCENTES  ####################
 
 @main.route('/home_docentes', methods=['GET', 'POST'])
+@login_required
 def home_docentes():
 
     
@@ -250,6 +267,7 @@ def home_docentes():
 #     return 'otra pagina'
 
 @main.route('/evaluar_actividades')
+@login_required
 def evaluar_actividades():
     
     if request.method == 'GET':       
@@ -267,6 +285,7 @@ def evaluar_actividades():
 
 
 @main.route('/Crear_actividades')
+@login_required
 def Crear_actividades():
     
     if request.method == 'GET':       
@@ -289,7 +308,8 @@ def Crear_actividades():
         return render_template("Crear_actividades.html", lista = listado, lista1 = listado1)
    
     
-@main.route('logout')
+@main.route('/logout/')
+@login_required
 def logout():
    session.clear()
 
