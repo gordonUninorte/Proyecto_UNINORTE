@@ -92,6 +92,7 @@ def login():
 #   ###############################   INGRESAR USUARIOS  ###############################      
 
 @main.route('/admin', methods=('GET', 'POST'))
+@login_required
 def admin():
     if request.method == 'GET':
     
