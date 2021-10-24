@@ -92,3 +92,24 @@ body {
 .login-box a:hover {
   color: #fff;
 }
+
+.userIcon {
+  position:absolute;
+  bottom: 135px;
+  right:1px;
+  width:25px;
+  height:25px;
+}
+
+.error
+{
+    color: red;
+}
+
+.input_container {
+  position:relative;
+  padding:0 0 0 20px;
+  margin:0 20px;
+  direction: rtl;
+  width: 200px;
+}
