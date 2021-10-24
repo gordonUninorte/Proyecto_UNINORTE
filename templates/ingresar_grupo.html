@@ -22,8 +22,8 @@
 				<figure class="full-box">
 					
 					<img src="{{ url_for('static', filename='./assets/img/Jesus.jpg') }}" alt="UserIcon">
-					<figcaption class="text-center text-titles">Jesús Calvo Mejía</figcaption>
-					<figcaption class="text-center text-titles">Administrador</figcaption>
+					<figcaption class="text-center text-titles">{{session['nombre']}}</figcaption>
+					<figcaption class="text-center text-titles">{{session['id_rol']}}</figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
 					<li>
@@ -118,7 +118,7 @@
 				  </a>
 				  <ul class="list-unstyled full-box">
 					  <li>
-						  <a href="school.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i> Datos de la Institución</a>
+						  <a href="!#"><i class="zmdi zmdi-balance zmdi-hc-fw"></i> Datos de la Institución</a>
 					  </li>
 				  </ul>
 			  </li>
@@ -163,21 +163,15 @@
   
     <tr>
       <td></td>
-      <td align="center"><label for="username">Grupo:</label>
-		<p> <input name="username" type="text" required="required" placeholder="Nombre del grupo" > <span class="error" id="errorName"></span></td>
+      <td align="center"><label for="username1">Grupo:</label>
+		<p> <input name="username1" type="text" required="required" placeholder="Nombre del grupo" > <span class="error" id="errorName"></span></td>
       <td>&nbsp;</td>
-		
-		
-      
-		
-<!--      <td width="67" align="right"><input type="submit" name="submit" id="submit" value="Eliminar"></td>-->
+
     </tr>
     <tr>
     
 		<td width="10" align="center">
-		
-		
-<!--      <td align="right"><input type="reset" name="reset" id="reset" value="Cancelar"></td>-->
+
         <td width="374" align="center"><input type="submit" name="submit" id="submit" value="Guardar"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type="reset" name="reset" id="reset" value="Cancelar"> 
 		  </td>       
         <td width="11" align="center">        

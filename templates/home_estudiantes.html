@@ -21,8 +21,8 @@
 		<div class="full-box dashboard-sideBar-UserInfo">
 				<figure class="full-box">
 					<img src="{{ url_for('static', filename='./assets/img/marvin.jpeg') }}" alt="UserIcon">
-					<figcaption class="text-center text-titles">Marvin David Guevara Silva</figcaption>
-					<figcaption class="text-center text-titles">Estudiante</figcaption>
+					<figcaption class="text-center text-titles">{{session['nombre']}}</figcaption>
+					<figcaption class="text-center text-titles">{{session['id_rol']}}</figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
 					<li>

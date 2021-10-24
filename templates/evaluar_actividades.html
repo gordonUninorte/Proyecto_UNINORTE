@@ -21,8 +21,8 @@
 		<div class="full-box dashboard-sideBar-UserInfo">
 				<figure class="full-box">
 					<img src="{{ url_for('static', filename='./assets/img/Lila.jpg') }}" alt="UserIcon">
-					<figcaption class="text-center text-titles">Lila Sarmiento Ortega</figcaption>
-					<figcaption class="text-center text-titles">Docente</figcaption>
+					<figcaption class="text-center text-titles">{{session['nombre']}}</figcaption>
+					<figcaption class="text-center text-titles">{{session['id_rol']}}</figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
 					<li>
@@ -155,12 +155,12 @@
     </tr>
     <tr>
 		<td width="67" align="center">
-			<label for="identificaion">{% for row in usuarios %} {{row[3]}} {% endfor %}</label></a> </td>
+			<label for="identificaion"value="{{user}}"></label></a>{{user}} </td>
 		
       <td height="60">&nbsp;</td>
 	
       <td width="67" align="center">
-		<label for="nombre">{% for row in usuarios %} {{row[2]}} {% endfor %}</label></a> </td>
+		<label for="nombre"value="{{user1}}"></label>{{user1}}</a> </td>
 		
     </tr>
     <tr>
@@ -169,11 +169,11 @@
 		<td><!-- Materia -->
 			<label for="materia">Materia:</label>
 				<p> <select type="text" name="curso"  id="curso"> <span class="error" id="errorCurso"></span></p>
-				<option hidden selected >Seleccione una Materia</option>
-				<option value="23">Programación Python</option>
-				<option value="24">Inglés</option>
-				<option value="25">Habilidades Personales</option>
-			</select>
+					{% for Materias in lista2 %}
+					<option hidden selected >Seleccione una Materia</option>
+					<option value="{{ Materias['Materias'] }}">{{ Materias['Materias'] }}</option>
+					{% endfor %}
+					</select>
 		
       <td height="60">&nbsp;</td>
 		
@@ -190,10 +190,10 @@
     
 		<td><label for="curso">Actividades:</label>
 				<p> <select type="text" name="curso"  id="curso"> <span class="error" id="errorCurso"></span></p>
-				<option hidden selected >Seleccione una actividad</option>
-				<option value="23">revolución industrial</option>
-				<option value="24">revolución tecnologica</option>
-				<option value="25">medio ambiente</option>
+				{% for Actividades in lista3 %}
+				<option hidden selected >Seleccione una Actividad</option>
+				<option value="{{ Actividades['nombre_actividad'] }}">{{ Actividades['nombre_actividad'] }}</option>
+				{% endfor %}
 			</select></td>
 		
       <td>&nbsp;</td>
