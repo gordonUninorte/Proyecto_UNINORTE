@@ -152,15 +152,85 @@
       <td align="left"> <input type="submit" name="buscar" id="buscar" value="Buscar"> </a>  </td>
       </tr>
     <tr>
+<<<<<<< HEAD
 		<td width="157" align="center">
+=======
+		<td width="67" align="center">
+>>>>>>> main
 			<label for="identificaion"value="{{user}}"></label></a>{{user}} </td>
 		
       <td height="60">&nbsp;</td>
 	
+<<<<<<< HEAD
       <td width="217" align="center">
 		<label for="nombre"value="{{user1}}"></label>{{user1}}</a> </td>
 		
     </tr>
+=======
+      <td width="67" align="center">
+		<label for="nombre"value="{{user1}}"></label>{{user1}}</a> </td>
+		
+    </tr>
+    <tr>
+      <!-- <td><label for="username">Curso:</label>
+		<p> <input type="text" placeholder="Nombre del curso" name="username" > <span class="error" id="errorName"></span></td> -->
+		<td><!-- Materia -->
+			<label for="materia">Materia:</label>
+				<p> <select type="text" name="curso"  id="curso"> <span class="error" id="errorCurso"></span></p>
+					{% for Materias in lista2 %}
+					<option hidden selected >Seleccione una Materia</option>
+					<option value="{{ Materias['Materias'] }}">{{ Materias['Materias'] }}</option>
+					{% endfor %}
+					</select>
+		
+      <td height="60">&nbsp;</td>
+		
+		
+      <!-- <td><label for="correo">Materia:</label>
+		<p> <input type="text" name="correo" placeholder="Nombre de la materia"> <span class="error" id="errorEmail"></span></td> -->
+		<td>	</td> <!-- ID CURSO -->
+			   
+
+
+<!--      <td width="67" align="right"><input type="submit" name="submit" id="submit" value="Eliminar"></td>-->
+    </tr>
+    <tr>
+    
+		<td><label for="curso">Actividades:</label>
+				<p> <select type="text" name="curso"  id="curso"> <span class="error" id="errorCurso"></span></p>
+				{% for Actividades in lista3 %}
+				<option hidden selected >Seleccione una Actividad</option>
+				<option value="{{ Actividades['nombre_actividad'] }}">{{ Actividades['nombre_actividad'] }}</option>
+				{% endfor %}
+			</select></td>
+		
+      <td>&nbsp;</td>
+      
+	 <td></td>	
+		
+<!--      <td align="right"><input type="reset" name="reset" id="reset" value="Cancelar"></td>-->
+    </tr>
+  </tbody>
+</table>
+  <table width="200" border="0">
+    <tbody>
+      <tr>
+        <td><label for="textarea">Comentarios</label>
+        <textarea name="textarea" cols="65" maxlength="2000" id="textarea" placeholder="Escribe aquí tus comentarios sobre la actividad:" title="comentarios"></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table width="406" height="31" border="0">
+    <tbody>
+      <tr>
+        <td width="62" align="left">&nbsp;</td>
+		  
+        <td width="188" align="center"><input type="submit" name="submit" id="submit" value="Guardar"></td>
+		  
+        <td width="177" align="right"><input type="reset" name="reset" id="reset" value="Cancelar"></td>
+      </tr>
+>>>>>>> main
     </tbody>
 </table>
   </td>

@@ -79,7 +79,7 @@ def evaluar_actividades():
         resultado=db.execute('select nombre from usuarios where identificacion = ? ', (identificacion,)).fetchall()
         db.commit()
         db.close()    
-        return render_template("evaluar_actividades1.html", user= resultado[0][0], user1= identificacion)
+        return render_template("evaluar_actividades.html", user= resultado[0][0], user1= identificacion)
 
     if request.method == 'GET':       
 
@@ -98,7 +98,7 @@ def evaluar_actividades():
         for item in result3:
             listado3.append({k: item[k] for k in item.keys()})
             
-        return render_template("evaluar_actividades1.html", lista2 = listado2, lista3 = listado3)
+        return render_template("evaluar_actividades.html", lista2 = listado2, lista3 = listado3)
 
 
 
