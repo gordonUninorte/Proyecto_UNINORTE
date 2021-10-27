@@ -62,49 +62,11 @@
 						  <a href="evaluar_actividades"><i class="zmdi zmdi-face zmdi-hc-fw"></i> Evaluar Actividades</a>
 					  </li>
 				  </ul>
-			  </li>
-			  <!-- <li>
-				  <a href="#!" class="btn-sideBar-SubMenu">
-					  <i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Gestionar Administrador<i class="zmdi zmdi-caret-down pull-right"></i>
-				  </a>
-				  <ul class="list-unstyled full-box">
-					  
-					  <li>
-						  <a href="admin"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Agregar Administrador</a>
-					  </li>
-					  <li>
-						  <a href="edit_admin"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Editar Administrador</a>
-					  </li>		
-				  </ul>
-			  </li> -->
-			  <li>	
-				<!--li>
-					<a href="#!" class="btn-sideBar-SubMenu">
-						<i class="zmdi zmdi-face zmdi-hc-fw"></i> Gestionar Estudiantes<i class="zmdi zmdi-caret-down pull-right"></i>
-					</a>
-					<ul class="list-unstyled full-box">
-						
-						<li>
-							<a href="Editar_nota"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Editar Evaluación</a>
-						</li-->
-						<!-- <li>
-							<a href="edit_estudiante"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Editar Estudiante</a>
-						</li> -->
-						
+			  </li>						
 					</ul>
 				</li>
 
 				<li>	
-			  <!-- <li>
-				  <a href="#!" class="btn-sideBar-SubMenu">
-					  <i class="zmdi zmdi-shield-security zmdi-hc-fw"></i> Configurar Institución <i class="zmdi zmdi-caret-down pull-right"></i>
-				  </a>
-				  <ul class="list-unstyled full-box">
-					  <li>
-						  <a href="school.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i> Datos de la Institución</a>
-					  </li>
-				  </ul>
-			  </li> -->
 		  </ul>
 		</div>
 	</section>
@@ -160,7 +122,7 @@
     <tr>
 		<td><!-- Materia -->
 			<label for="materia">Materia:</label>
-				<p> <select type="text" name="curso"  id="curso"> <span class="error" id="errorCurso"></span></p>
+				<p> <select type="text" name="Materias"  id="Materias"> <span class="error" id="errorCurso"></span></p>
 					{% for Materias in lista %}
 				<option hidden selected >Seleccione una Materia</option>
 				<option value="{{ Materias['Materias'] }}">{{ Materias['Materias'] }}</option>
