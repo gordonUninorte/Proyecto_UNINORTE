@@ -73,9 +73,10 @@ def curso():
 @main.route('/evaluar_actividades', methods=['GET', 'POST'])
 @login_required
 def evaluar_actividades():
-
-    if request.method == 'GET':       
-
+   
+        
+    if request.method == "GET":       
+        print("Entre al metodo get")
         db = get_db()
         db.row_factory = sqlite3.Row
         result2 = db.execute('select * from Materias').fetchall()
@@ -93,12 +94,10 @@ def evaluar_actividades():
             return render_template("evaluar_actividades.html", lista2 = listado2, lista3 = listado3)
       
 
-    if request.method =='POST':
+    if request.method == "POST":
         identificacion = escape(request.form['id'])        
         db = get_db()
-        
         resultado=db.execute('select nombre from usuarios where identificacion = ? ', (identificacion,)).fetchall()
-        prueba=resultado[0][0]
         db.row_factory = sqlite3.Row
         result2 = db.execute('select * from Materias').fetchall()
         result3 = db.execute('select * from Actividades').fetchall()
@@ -109,28 +108,21 @@ def evaluar_actividades():
         listado3 = []
         for item in result3:
             listado3.append({k: item[k] for k in item.keys()})
-        db.commit()
+
+        Materia = escape(request.form['Materias'])
+        Actividad = escape(request.form['Actividades'])
+        nombre = resultado[0][0] #escape(request.form['nombre'])
+        Identificacion = identificacion#escape(request.form['Identificacion'])
+        Calificacion = escape(request.form['Calificacion'])
+        Comentario = escape(request.form['textarea'])
+        
+        if Materia != "Seleccione una Materia" and Actividad != "Seleccione una Actividad" and Calificacion !="":
+            db.execute("insert into Evaluar_actividades (id_materias, id_actividades, nombre_estudiante, identificacion_estudiante, calificacion, comentarios) values( ?, ?, ?, ?, ?, ?)",(Materia, Actividad, nombre, Identificacion, Calificacion, Comentario))
+            db.commit()
+            nombre=""
+            identificacion=""
         db.close()
-        return render_template("evaluar_actividades.html", user= prueba, user1= identificacion, lista2 = listado2, lista3 = listado3)
-        
-        
-    # if request.method =='POST':
-    #     db = get_db()
-        # Materia = escape(request.form['Materias'])
-        # Actividad = escape(request.form['Actividades'])
-        # nombre = escape(request.form['nombre'])
-        # Identificacion = escape(request.form['Identificacion'])
-        # Calificacion = escape(request.form['Calificacion'])
-        # Comentario = escape(request.form['textarea'])
-        
-        # db.execute("insert into Evaluar_actividades (id_materias, id_actividades, nombre_estudiante, identificacion_estudiante, calificacion, comentario) values( ?, ?, ?, ?, ?, ?)",(Materia, Actividad, nombre, Identificacion, Calificacion, Comentario))
-        # db.commit()
-        # db.close() 
-        # return render_template("evaluar_actividades.html", user= resultado[0][0], user1= identificacion, lista2 = listado2, lista3 = listado3)
-              
-        
-
-
+        return render_template("evaluar_actividades.html", user= nombre, user1= identificacion, lista2 = listado2, lista3 = listado3)
 
 @main.route('/asignar_docentes', methods=('GET', 'POST'))
 def asignar_docentes():
