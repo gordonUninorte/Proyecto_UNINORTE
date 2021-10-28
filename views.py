@@ -128,7 +128,53 @@ def evaluar_actividades():
         # db.close() 
         # return render_template("evaluar_actividades.html", user= resultado[0][0], user1= identificacion, lista2 = listado2, lista3 = listado3)
               
+    if request.method == "GET":       
+        print("Entre al metodo get")
+        db = get_db()
+        db.row_factory = sqlite3.Row
+        result2 = db.execute('select * from Materias').fetchall()
+        result3 = db.execute('select * from Actividades').fetchall()
+        db.commit()
+        db.close()
+
+        listado2 = []
+        for item in result2:
+            listado2.append({j: item[j] for j in item.keys()})
+                  
+        listado3 = []
+        for item in result3:
+            listado3.append({k: item[k] for k in item.keys()})
+            return render_template("evaluar_actividades.html", lista2 = listado2, lista3 = listado3)
+      
+
+    if request.method == "POST":
+        identificacion = escape(request.form['id'])        
+        db = get_db()
+        resultado=db.execute('select nombre from usuarios where identificacion = ? ', (identificacion,)).fetchall()
+        db.row_factory = sqlite3.Row
+        result2 = db.execute('select * from Materias').fetchall()
+        result3 = db.execute('select * from Actividades').fetchall()
+        listado2 = []
+        for item in result2:
+            listado2.append({j: item[j] for j in item.keys()})
+                  
+        listado3 = []
+        for item in result3:
+            listado3.append({k: item[k] for k in item.keys()})
+
+        Materia = escape(request.form['Materias'])
+        Actividad = escape(request.form['Actividades'])
+        nombre = resultado[0][0] #escape(request.form['nombre'])
+        Identificacion = identificacion#escape(request.form['Identificacion'])
+        Calificacion = escape(request.form['Calificacion'])
+        Comentario = escape(request.form['textarea'])
         
+        db.execute("insert into Evaluar_actividades (id_materias, id_actividades, nombre_estudiante, identificacion_estudiante, calificacion, comentarios) values( ?, ?, ?, ?, ?, ?)",(Materia, Actividad, nombre, Identificacion, Calificacion, Comentario))
+        db.commit()
+        db.close()
+        print("Entre al metodo post")
+        print(resultado[0][0])
+        return render_template("evaluar_actividades.html", user= resultado[0][0], user1= identificacion, lista2 = listado2, lista3 = listado3)        
 
 
 
