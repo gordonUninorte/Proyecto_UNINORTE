@@ -3,6 +3,7 @@ from flask import Flask, render_template, blueprints, request, send_file, redire
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import get_db
 from markupsafe import escape
+from  datetime import datetime
 import sqlite3
 
 # from formularios import formularioMensaje
@@ -62,7 +63,7 @@ def curso():
         
         curso = escape(request.form['username1'])
         db = get_db()
-        db.execute("insert into cursos (cursos) values(?)",(curso))
+        db.execute("insert into cursos (cursos) values (?)",[curso])
         db.commit()
         db.close()
 
@@ -72,14 +73,6 @@ def curso():
 @main.route('/evaluar_actividades', methods=['GET', 'POST'])
 @login_required
 def evaluar_actividades():
-    
-    if request.method =='POST':
-        identificacion = escape(request.form['id'])        
-        db = get_db()
-        resultado=db.execute('select nombre from usuarios where identificacion = ? ', (identificacion,)).fetchall()
-        db.commit()
-        db.close()    
-        return render_template("evaluar_actividades.html", user= resultado[0][0], user1= identificacion)
 
     if request.method == 'GET':       
 
@@ -97,8 +90,45 @@ def evaluar_actividades():
         listado3 = []
         for item in result3:
             listado3.append({k: item[k] for k in item.keys()})
-            
-        return render_template("evaluar_actividades.html", lista2 = listado2, lista3 = listado3)
+            return render_template("evaluar_actividades.html", lista2 = listado2, lista3 = listado3)
+      
+
+    if request.method =='POST':
+        identificacion = escape(request.form['id'])        
+        db = get_db()
+        
+        resultado=db.execute('select nombre from usuarios where identificacion = ? ', (identificacion,)).fetchall()
+        prueba=resultado[0][0]
+        db.row_factory = sqlite3.Row
+        result2 = db.execute('select * from Materias').fetchall()
+        result3 = db.execute('select * from Actividades').fetchall()
+        listado2 = []
+        for item in result2:
+            listado2.append({j: item[j] for j in item.keys()})
+                  
+        listado3 = []
+        for item in result3:
+            listado3.append({k: item[k] for k in item.keys()})
+        db.commit()
+        db.close()
+        return render_template("evaluar_actividades.html", user= prueba, user1= identificacion, lista2 = listado2, lista3 = listado3)
+        
+        
+    # if request.method =='POST':
+    #     db = get_db()
+        # Materia = escape(request.form['Materias'])
+        # Actividad = escape(request.form['Actividades'])
+        # nombre = escape(request.form['nombre'])
+        # Identificacion = escape(request.form['Identificacion'])
+        # Calificacion = escape(request.form['Calificacion'])
+        # Comentario = escape(request.form['textarea'])
+        
+        # db.execute("insert into Evaluar_actividades (id_materias, id_actividades, nombre_estudiante, identificacion_estudiante, calificacion, comentario) values( ?, ?, ?, ?, ?, ?)",(Materia, Actividad, nombre, Identificacion, Calificacion, Comentario))
+        # db.commit()
+        # db.close() 
+        # return render_template("evaluar_actividades.html", user= resultado[0][0], user1= identificacion, lista2 = listado2, lista3 = listado3)
+              
+        
 
 
 
@@ -174,10 +204,10 @@ def login():
     return render_template('login.html')    
 
 @main.route('/admin', methods=('GET', 'POST'))
-@login_required
 def admin():
     if request.method == 'GET':
-
+    
+    
         db = get_db()
         db.row_factory = sqlite3.Row
         result = db.execute('select * from rol').fetchall()
@@ -196,16 +226,29 @@ def admin():
         nombre = escape(request.form['username'])
         correo = escape(request.form['correo'])
         password = escape(request.form['userPassword'])
-        # foto = escape(request.form['foto'])
+        foto = request.files['cargar_foto']
+        
+        now = datetime.now()                        # --> Colocar la fecha como nombre a la foto
+        tiempo = now.strftime("%Y%H%M%S")           #
+                                                
+        if foto.filename!='': 
+            nuevoNombreFoto=tiempo+foto.filename  #
+            foto.save("static/assets/img/"+ nuevoNombreFoto) 
+        rutafoto= "static/assets/img/"+ nuevoNombreFoto
+    ############################################## 
+    
+    
         
         db = get_db()
+        #agregar SALT
         password = password + correo
         password = generate_password_hash(password)
-        db.execute("insert into usuarios (id_rol, identificacion, nombre, correo, password) values( ?, ?, ?, ?, ?)",(id_rol, identificacion, nombre, correo, password))
+        db.execute("insert into usuarios (id_rol, identificacion, nombre, correo, password, foto) values( ?, ?, ?, ?, ?, ?)",(id_rol, identificacion, nombre, correo, password, rutafoto))
         db.commit()
-        db.close()
+        db.close()       
     
     return render_template("ingresar_admin.html")
+
 
 @main.route('/home_docentes', methods=['GET', 'POST'])
 @login_required

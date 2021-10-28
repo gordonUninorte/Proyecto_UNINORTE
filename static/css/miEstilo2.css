@@ -10,7 +10,7 @@ body {
 
 .login-box {
   width: 550px;
-  height: 550px;
+  height: 560px;
   background: #000;
   color: #fff;
   top: 50;
@@ -88,6 +88,17 @@ body {
   width: 220px;
   height: 40px;
   color: #fff;
+  font-size: 16px;
+}
+
+.login-box textarea[type="textarea"]{
+  border: none;
+  border-bottom: 1px solid #fff;
+  background:transparent;
+  outline: none;
+  width: 470px;
+  height: 70px;
+  color: rgb(255, 253, 253);
   font-size: 16px;
 }
 
