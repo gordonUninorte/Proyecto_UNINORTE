@@ -28,9 +28,9 @@ def home_admin():
     
     return render_template("home_admin.html")
 
-@main.route('/home_estudiante')
+@main.route('/home_estudiantes')
 @login_required
-def home_estudiante():
+def home_estudiantes():
     
     return render_template("home_estudiantes.html")
 
@@ -46,9 +46,9 @@ def actividades_estu():
 def materia():
     if request.method == 'POST':
         
-        nombre = escape(request.form['username'])
+        nombre = escape(request.form['materia'])
         db = get_db()
-        db.execute("insert into Materias (Materias) values(?)",(nombre))
+        db.execute("insert into Materias (Materias) values(?)",[nombre])
         db.commit()
         db.close()
         
@@ -73,8 +73,7 @@ def curso():
 @main.route('/evaluar_actividades', methods=['GET', 'POST'])
 @login_required
 def evaluar_actividades():
-   
-        
+       
     if request.method == "GET":       
         print("Entre al metodo get")
         db = get_db()
@@ -92,50 +91,99 @@ def evaluar_actividades():
         for item in result3:
             listado3.append({k: item[k] for k in item.keys()})
             return render_template("evaluar_actividades.html", lista2 = listado2, lista3 = listado3)
-      
+        
+    if request.method == "POST":
+        identificacion = escape(request.form['id'])
+        Ident = ['Identificacion']       
+        db = get_db()
+        resultado=db.execute('select nombre, id_rol from usuarios where identificacion = ? ', (identificacion,)).fetchall()     
+        if Ident is not None:
+                sw = (resultado[0][1])
+                
+                if(sw):
+                    
+                    if(resultado[0][1] != 'Estudiante'):
+                        print("No existe el estudiante")
+                        flash('Usuario o clave incorrectos.', 'errodeLogin')
+                        return redirect(url_for('main.evaluar_actividades'))
+                        
+                    elif(resultado[0][1] == 'Estudiante'):   
+
+                        db.row_factory = sqlite3.Row
+                        result2 = db.execute('select * from Materias').fetchall()
+                        result3 = db.execute('select * from Actividades').fetchall()
+                        listado2 = []
+                        for item in result2:
+                            listado2.append({j: item[j] for j in item.keys()})
+                                
+                        listado3 = []
+                        for item in result3:
+                            listado3.append({k: item[k] for k in item.keys()})
+
+                        Materia = escape(request.form['Materias'])
+                        Actividad = escape(request.form['Actividades'])
+                        nombre = resultado[0][0] 
+                        Identificacion = identificacion
+                        Calificacion = escape(request.form['Calificacion'])
+                        Comentario = escape(request.form['textarea'])                            
+                
+                        if Materia != "Seleccione una Materia" and Actividad != "Seleccione una Actividad" and Calificacion !="":
+                            db.execute("insert into Evaluar_actividades (id_materias, id_actividades, nombre_estudiante, identificacion_estudiante, calificacion, comentarios) values( ?, ?, ?, ?, ?, ?)",(Materia, Actividad, nombre, Identificacion, Calificacion, Comentario))
+                            db.commit()
+                            nombre=""
+                            identificacion=""
+                        db.close()
+                        return render_template("evaluar_actividades.html", user= nombre, user1= identificacion, lista2 = listado2, lista3 = listado3)
+
+@main.route('/asignar_docentes', methods=('GET', 'POST'))
+def asignar_docentes():
+    
+    if request.method == "GET":       
+        print("Entre al metodo get")
+        db = get_db()
+        db.row_factory = sqlite3.Row
+        result4 = db.execute('select * from Materias').fetchall()
+        result5 = db.execute('select * from cursos').fetchall()
+        db.commit()
+        db.close()
+
+        listado4 = []
+        for item in result4:
+            listado4.append({j: item[j] for j in item.keys()})
+                  
+        listado5 = []
+        for item in result5:
+            listado5.append({k: item[k] for k in item.keys()})
+            return render_template("asignar_docentes.html", lista2 = listado4, lista3 = listado5)
 
     if request.method == "POST":
         identificacion = escape(request.form['id'])        
         db = get_db()
-        resultado=db.execute('select nombre from usuarios where identificacion = ? ', (identificacion,)).fetchall()
+        result=db.execute('select nombre from usuarios where identificacion = ? ', (identificacion,)).fetchall()
         db.row_factory = sqlite3.Row
-        result2 = db.execute('select * from Materias').fetchall()
-        result3 = db.execute('select * from Actividades').fetchall()
-        listado2 = []
-        for item in result2:
-            listado2.append({j: item[j] for j in item.keys()})
+        result4 = db.execute('select * from Materias').fetchall()
+        result5 = db.execute('select * from cursos').fetchall()
+        
+        listado4 = []
+        for item in result4:
+            listado4.append({j: item[j] for j in item.keys()})
                   
-        listado3 = []
-        for item in result3:
-            listado3.append({k: item[k] for k in item.keys()})
+        listado5 = []
+        for item in result5:
+            listado5.append({k: item[k] for k in item.keys()})
 
         Materia = escape(request.form['Materias'])
-        Actividad = escape(request.form['Actividades'])
-        nombre = resultado[0][0] #escape(request.form['nombre'])
-        Identificacion = identificacion#escape(request.form['Identificacion'])
-        Calificacion = escape(request.form['Calificacion'])
-        Comentario = escape(request.form['textarea'])
-        
-        if Materia != "Seleccione una Materia" and Actividad != "Seleccione una Actividad" and Calificacion !="":
-            db.execute("insert into Evaluar_actividades (id_materias, id_actividades, nombre_estudiante, identificacion_estudiante, calificacion, comentarios) values( ?, ?, ?, ?, ?, ?)",(Materia, Actividad, nombre, Identificacion, Calificacion, Comentario))
+        Cursos = escape(request.form['cursos'])
+        nombre = result[0][0]
+        Identificacion = identificacion
+
+        if Materia != "Seleccione una Materia" and Cursos != "Seleccione un Curso":
+            db.execute("insert into Asignar_docentes (id_curso, id_materia, nombre_docente, identificacion_docente) values( ?, ?, ?, ?)",(Materia, Cursos, nombre, Identificacion))
             db.commit()
             nombre=""
             identificacion=""
         db.close()
-        return render_template("evaluar_actividades.html", user= nombre, user1= identificacion, lista2 = listado2, lista3 = listado3)
-
-@main.route('/asignar_docentes', methods=('GET', 'POST'))
-def asignar_docentes():
-   
-    if request.method =='POST':
-        identificacion = escape(request.form['id'])        
-        db = get_db()
-        resultado=db.execute('select nombre from usuarios where identificacion = ? ', (identificacion,)).fetchall()
-        db.commit()
-        db.close()    
-        return render_template("asignar_docentes.html", user= resultado[0][0], user1= identificacion)
-   
-    return render_template('asignar_docentes.html')
+        return render_template("asignar_docentes.html", user= nombre, user1= identificacion, lista2 = listado4, lista3 = listado5)
 
 @main.route( '/', methods=['GET', 'POST'] )
 
@@ -164,7 +212,6 @@ def login():
         user = db.execute('select * from usuarios where correo = ? ', (correo,)).fetchone()
         db.commit()
         db.close()
-
 
         if user is not None:
             
@@ -289,16 +336,89 @@ def Crear_actividades():
         actividad = escape(request.form['id'])
         materia = escape(request.form['Materias'])
         curso = escape(request.form['curso'])
+        nombre= session['nombre']
         
         
         
         db = get_db()
-        db.execute("insert into Actividades (id_materia, id_curso, nombre_actividad) values( ?, ?, ?)",(materia, curso, actividad))
+        db.execute("insert into Actividades (id_materia, id_curso, nombre_actividad, nombre_docente) values( ?, ?, ?, ?)",(materia, curso, actividad, nombre))
         db.commit()
         db.close()
         
         
     return render_template("Crear_actividades.html")
+
+
+
+
+@main.route('/edit_admin')
+@login_required
+def edit_admin():
+    if request.method == "GET":       
+        print("Entre al metodo get")
+        db = get_db()
+        db.row_factory = sqlite3.Row
+        result2 = db.execute('select * from Materias').fetchall()
+        result3 = db.execute('select * from Actividades').fetchall()
+        db.commit()
+        db.close()
+
+        listado2 = []
+        for item in result2:
+            listado2.append({j: item[j] for j in item.keys()})
+                  
+        listado3 = []
+        for item in result3:
+            listado3.append({k: item[k] for k in item.keys()})
+            return render_template("editar_usuario.html", lista2 = listado2, lista3 = listado3)
+        
+    if request.method == "POST":
+        identificacion = escape(request.form['id'])
+        Ident = ['Identificacion']       
+        db = get_db()
+        resultado=db.execute('select nombre, id_rol from usuarios where identificacion = ? ', (identificacion,)).fetchall()     
+        if Ident is not None:
+                sw = (resultado[0][1])
+                
+                if(sw):
+                    
+                    if(resultado[0][1] != 'Estudiante'):
+                        print("No existe el estudiante")
+                        flash('Usuario o clave incorrectos.', 'errodeLogin')
+                        return redirect(url_for('main.evaluar_actividades'))
+                        
+                    elif(resultado[0][1] == 'Estudiante'):   
+
+                        db.row_factory = sqlite3.Row
+                        result2 = db.execute('select * from Materias').fetchall()
+                        result3 = db.execute('select * from Actividades').fetchall()
+                        listado2 = []
+                        for item in result2:
+                            listado2.append({j: item[j] for j in item.keys()})
+                                
+                        listado3 = []
+                        for item in result3:
+                            listado3.append({k: item[k] for k in item.keys()})
+
+                        Materia = escape(request.form['Materias'])
+                        Actividad = escape(request.form['Actividades'])
+                        nombre = resultado[0][0] 
+                        Identificacion = identificacion
+                        Calificacion = escape(request.form['Calificacion'])
+                        Comentario = escape(request.form['textarea'])                            
+                
+                        if Materia != "Seleccione una Materia" and Actividad != "Seleccione una Actividad" and Calificacion !="":
+                            db.execute("insert into Evaluar_actividades (id_materias, id_actividades, nombre_estudiante, identificacion_estudiante, calificacion, comentarios) values( ?, ?, ?, ?, ?, ?)",(Materia, Actividad, nombre, Identificacion, Calificacion, Comentario))
+                            db.commit()
+                            nombre=""
+                            identificacion=""
+                        db.close()
+                        return render_template("editar_usuario.html", user= nombre, user1= identificacion, lista2 = listado2, lista3 = listado3)
+
+
+
+
+
 
 @main.route('/logout/')
 @login_required
