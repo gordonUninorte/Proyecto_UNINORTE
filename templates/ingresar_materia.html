@@ -20,7 +20,6 @@
 			<!-- SideBar User info -->
 		<div class="full-box dashboard-sideBar-UserInfo">
 				<figure class="full-box">
-					
 					<img src="{{ url_for('static', filename='./assets/img/Jesus.jpg') }}" alt="UserIcon">
 					<figcaption class="text-center text-titles">{{session['nombre']}}</figcaption>
 					<figcaption class="text-center text-titles">{{session['id_rol']}}</figcaption>
@@ -41,7 +40,7 @@
 		  <!-- SideBar Menu -->
 		  <ul class="list-unstyled full-box dashboard-sideBar-Menu">
 			  <li>
-				  <a href="/home_admin">
+				  <a href="home_admin">
 					  <i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i> Dashboard
 				  </a>
 			  </li>
@@ -50,14 +49,14 @@
 					  <i class="zmdi zmdi-case zmdi-hc-fw"></i> Administración <i class="zmdi zmdi-caret-down pull-right"></i>
 				  </a>
 				  <ul class="list-unstyled full-box">
-					  <li>
+					  <!-- <li>
 						  <a href="periodo"><i class="zmdi zmdi-timer zmdi-hc-fw"></i> Período</a>
-					  </li>
+					  </li> -->
 					  <li>
 						  <a href="materia"><i class="zmdi zmdi-book zmdi-hc-fw"></i> Materia</a>
 					  </li>
 					  <li>
-						  <a href="asignar_docentes"><i class="zmdi zmdi-graduation-cap zmdi-hc-fw"></i> Asignar Docentes</a>
+						  <a href="asignar_docentes"><i class="zmdi zmdi-graduation-cap zmdi-hc-fw"></i> Asignar docente</a>
 					  </li>
 					  <li>
 						  <a href="curso"><i class="zmdi zmdi-font zmdi-hc-fw"></i> Curso</a>
@@ -66,51 +65,18 @@
 			  </li>
 			  <li>
 				  <a href="#!" class="btn-sideBar-SubMenu">
-					  <i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Gestionar Administrador<i class="zmdi zmdi-caret-down pull-right"></i>
+					  <i class="zmdi zmdi-account zmdi-hc-fw"></i> Gestionar Usuarios<i class="zmdi zmdi-caret-down pull-right"></i>
 				  </a>
 				  <ul class="list-unstyled full-box">
 					  
 					  <li>
-						  <a href="admin"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Agregar Administrador</a>
+						  <a href="admin"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Agregar Usuario</a>
 					  </li>
 					  <li>
-						  <a href="edit_admin"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Editar Administrador</a>
+						  <a href="edit_admin"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Editar Usuario</a>
 					  </li>		
 				  </ul>
 			  </li>
-			  <li>	
-				<li>
-					<a href="#!" class="btn-sideBar-SubMenu">
-						<i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Gestionar Docentes<i class="zmdi zmdi-caret-down pull-right"></i>
-					</a>
-					<ul class="list-unstyled full-box">
-						
-						<li>
-							<a href="ingresar_docentes"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i> Agregar Docente</a>
-						</li>
-						<li>
-							<a href="edit_docentes"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i>Editar Docente</a>
-						</li>
-							
-					</ul>
-				</li>
-
-				<li>
-					<a href="#!" class="btn-sideBar-SubMenu">
-						<i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Gestionar Estudiantes<i class="zmdi zmdi-caret-down pull-right"></i>
-					</a>
-					<ul class="list-unstyled full-box">
-						
-						<li>
-							<a href="ingresar_estudiante"><i class="zmdi zmdi-face zmdi-hc-fw"></i> Agregar Estudiante</a>
-						</li>
-						<li>
-							<a href="edit_estudiante"><i class="zmdi zmdi-face zmdi-hc-fw"></i> Editar Estudiante</a>
-						</li>
-						
-					</ul>
-				</li>
-
 				<li>	
 			  <li>
 				  <a href="#!" class="btn-sideBar-SubMenu">
@@ -163,21 +129,15 @@
   
     <tr>
       <td></td>
-      <td align="center"><label for="username">Materia:</label>
-		<p> <input name="username" type="text" required="required" placeholder="Nombre de la materia" > <span class="error" id="errorName"></span></td>
+      <td align="center"><label for="username1">Materia:</label>
+		<p> <input name="materia" type="text" required="required" placeholder="Nombre de la Materia" > <span class="error" id="errorName"></span></td>
       <td>&nbsp;</td>
-		
-		
-      
-		
-<!--      <td width="67" align="right"><input type="submit" name="submit" id="submit" value="Eliminar"></td>-->
+
     </tr>
     <tr>
     
 		<td width="10" align="center">
-		
-		
-<!--      <td align="right"><input type="reset" name="reset" id="reset" value="Cancelar"></td>-->
+
         <td width="374" align="center"><input type="submit" name="submit" id="submit" value="Guardar"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type="reset" name="reset" id="reset" value="Cancelar"> 
 		  </td>       
         <td width="11" align="center">        
