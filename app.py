@@ -20,9 +20,9 @@ def create_app():
     app.secret_key = 'Equipo8'#os.urandom( 24 )
 
     from views import main
-
-
     app.register_blueprint(main, url_prefix='/')  
-    
     return app 
 
+app = create_app()
+if __name__ == "__main__":
+    app.run(debug=True)
