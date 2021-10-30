@@ -5,6 +5,7 @@ from db import get_db
 from markupsafe import escape
 from  datetime import datetime
 import sqlite3
+from db import *
 
 # from formularios import formularioMensaje
 
@@ -34,11 +35,62 @@ def home_estudiantes():
     
     return render_template("home_estudiantes.html")
 
-@main.route('/actividades_estu')
+# @main.route('/actividades_estu')
+# @login_required
+# def actividades_estu():
+    
+@main.route('/actividades_estu', methods=('GET', 'POST'))
 @login_required
 def actividades_estu():
-    
+    if request.method == 'GET':       
+        db = get_db()
+        db.row_factory = sqlite3.Row
+        usua= session['nombre']
+        result2 = db.execute('select id_materias from Evaluar_actividades where nombre_estudiante =? ', (usua,)).fetchall()
+        # acti= ['Materias']
+        result3 = db.execute('select * from Actividades').fetchall()
+        db.commit()
+        db.close()
+        lista_m = []
+        for item in result2:
+            lista_m.append({j: item[j] for j in item.keys()})
+                  
+        lista_a = []
+        for item in result3:
+            lista_a.append({k: item[k] for k in item.keys()})
+            return render_template("actividades_estu.html", listam = lista_m, listaA = lista_a)
+
+    if request.method =='POST':
+        materia = escape(request.form['Materias']) 
+        actividad = escape(request.form['Actividades'])        
+        db = get_db()
+        #llamado a la calificación
+        calificacion=db.execute('select calificacion from Evaluar_actividades where id_materias =?', (materia,)).fetchall()
+        calificacion2=db.execute('select calificacion from Evaluar_actividades where id_materias = ? and id_actividades = ?', (materia,) (actividad,)).fetchall()
+        comentario=db.execute('select comentarios from Evaluar_actividades where id_materias = ? and id_actividades = ?', (materia,) (actividad,)).fetchall()
+        # db.row_factory = sqlite3.Row
+        #mete los datos del resultado en una lista
+        promedio = 0.00
+        for nota in calificacion:
+            promedio = promedio + float(nota[0])
+            print(nota[0])
+        promedio=promedio/len(calificacion)
+
+        lista_m = []
+        for item in calificacion2:
+            lista_m.append({j: item[j] for j in item.keys()})
+        cali1=lista_m[0]
+
+        lista_a = []
+        for item in comentario:
+            lista_a.append({j: item[j] for j in item.keys()})
+        cali2=lista_a[0]
+            
+        db.commit()
+        db.close()
+        return render_template("actividades_estu.html", prome= promedio, calificacio= cali1,comm=cali2)
     return render_template("actividades_estu.html")
+
 
 
 @main.route('/materia', methods=('GET', 'POST'))
@@ -351,14 +403,16 @@ def Crear_actividades():
 
 
 
-@main.route('/edit_admin')
+@main.route('/edit_admin', methods=['GET', 'POST'])
 @login_required
 def edit_admin():
+    
+    
     if request.method == "GET":       
         print("Entre al metodo get")
         db = get_db()
         db.row_factory = sqlite3.Row
-        result2 = db.execute('select * from Materias').fetchall()
+        result2 = db.execute('select * from rol').fetchall()
         result3 = db.execute('select * from Actividades').fetchall()
         db.commit()
         db.close()
@@ -376,46 +430,36 @@ def edit_admin():
         identificacion = escape(request.form['id'])
         Ident = ['Identificacion']       
         db = get_db()
-        resultado=db.execute('select nombre, id_rol from usuarios where identificacion = ? ', (identificacion,)).fetchall()     
-        if Ident is not None:
-                sw = (resultado[0][1])
+        # resultado=db.execute('select nombre, id_rol from usuarios where identificacion = ? ', (identificacion,)).fetchall()     
+        resultado=db.execute('select * from usuarios where identificacion = ? ', (identificacion,)).fetchall()
+
+        db.row_factory = sqlite3.Row
+        result2 = db.execute('select * from rol').fetchall()
+        result3 = db.execute('select * from Actividades').fetchall()
+        listado2 = []
+        for item in result2:
+            listado2.append({j: item[j] for j in item.keys()})
                 
-                if(sw):
-                    
-                    if(resultado[0][1] != 'Estudiante'):
-                        print("No existe el estudiante")
-                        flash('Usuario o clave incorrectos.', 'errodeLogin')
-                        return redirect(url_for('main.evaluar_actividades'))
-                        
-                    elif(resultado[0][1] == 'Estudiante'):   
+        listado3 = []
+        for item in result3:
+            listado3.append({k: item[k] for k in item.keys()})
 
-                        db.row_factory = sqlite3.Row
-                        result2 = db.execute('select * from Materias').fetchall()
-                        result3 = db.execute('select * from Actividades').fetchall()
-                        listado2 = []
-                        for item in result2:
-                            listado2.append({j: item[j] for j in item.keys()})
-                                
-                        listado3 = []
-                        for item in result3:
-                            listado3.append({k: item[k] for k in item.keys()})
+        rol = escape(request.form['rol'])
+    
+        id_rol=resultado[0][1]
+        nombre = resultado[0][3] 
+        correo=resultado[0][4]
+        password=resultado[0][5]
+        foto=resultado[0][6]
+        Identificacion = identificacion                           
 
-                        Materia = escape(request.form['Materias'])
-                        Actividad = escape(request.form['Actividades'])
-                        nombre = resultado[0][0] 
-                        Identificacion = identificacion
-                        Calificacion = escape(request.form['Calificacion'])
-                        Comentario = escape(request.form['textarea'])                            
-                
-                        if Materia != "Seleccione una Materia" and Actividad != "Seleccione una Actividad" and Calificacion !="":
-                            db.execute("insert into Evaluar_actividades (id_materias, id_actividades, nombre_estudiante, identificacion_estudiante, calificacion, comentarios) values( ?, ?, ?, ?, ?, ?)",(Materia, Actividad, nombre, Identificacion, Calificacion, Comentario))
-                            db.commit()
-                            nombre=""
-                            identificacion=""
-                        db.close()
-                        return render_template("editar_usuario.html", user= nombre, user1= identificacion, lista2 = listado2, lista3 = listado3)
-
-
+        # if id_rol != "Seleccione un nuevo Privilegio" and correo != "" and password !="":
+        #     db.execute("update Actividades set (id_rol, nombre, correo, password)  ( ?, ?, ?, ?), where",(id_rol, nombre, correo, password))
+        # db.commit()
+        # nombre=""
+        # identificacion=""
+        # db.close()
+        return render_template("editar_usuario.html", user= nombre, user1= identificacion,user3=correo, user4=password, user5=foto,  lista2 = listado2, lista3 = listado3)
 
 
 

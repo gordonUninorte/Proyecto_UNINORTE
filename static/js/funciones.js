@@ -63,12 +63,8 @@ function validarLogin()
 
              var swError=false;
 			 
-             if (userName.value == ""){ 
-                 document.getElementById('errorUsername').innerHTML="Por favor escriba su usuario.";  
-                 userName.focus();
-                 swError=true; 
-                 //return false; 
-             }else if (!userName.value.match(formato_email)) {
+        
+             if (!userName.value.match(formato_email)) {
                  document.getElementById('errorUsername').innerHTML="formato no valido Email.";  
                  userName.focus();
                  swError=true;
@@ -76,14 +72,14 @@ function validarLogin()
                 document.getElementById('errorUsername').innerHTML="";
              }
                    
-             if (userPassword.value == ""){ 
+             /*if (userPassword.value == ""){ 
                  document.getElementById('errorPassword').innerHTML="Por favor escriba una clave.";  
                  userPassword.focus();
                  swError=true; 
                  //return false; 
              }else{
                  document.getElementById('errorPassword').innerHTML="";  
-             }
+             }*/
 			
 			if (swError==true) {
                 
