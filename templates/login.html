@@ -16,12 +16,12 @@
       <form name="formularioLogin" onsubmit="return validarLogin()" method="POST">
         <!-- USERNAME INPUT -->
         <label for="correo">Usuario:</label>
-        <input type="text" name="correo" id="correo" placeholder="Ingrese su Email">
+        <input type="text" name="correo" id="correo" placeholder="Ingrese su Email" required>
         <span class="error" id="errorUsername"></span>
         <!-- PASSWORD INPUT -->
         <label for="password">Contraseña:</label>
         <div class="input_Container">
-          <input type="password" name="userPassword" id="userPassword" placeholder="Ingrese su Contraseña"/>
+          <input type="password" name="userPassword" id="userPassword" placeholder="Ingrese su Contraseña" required/>
           <img src="{{ url_for('static', filename='img/view2.png') }}" class="userIcon" alt="ver password" onmouseover="mostrar();" 
           onmouseleave="ocultar();">
         </div>

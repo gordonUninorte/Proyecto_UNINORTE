@@ -5,6 +5,7 @@ from db import get_db
 from markupsafe import escape
 from  datetime import datetime
 import sqlite3
+from db import *
 
 # from formularios import formularioMensaje
 
