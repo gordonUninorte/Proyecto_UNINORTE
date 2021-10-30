@@ -87,7 +87,7 @@ body {
   outline: none;
   width: 220px;
   height: 40px;
-  color: #fff;
+  color: white;
   font-size: 16px;
 }
 
@@ -131,3 +131,13 @@ body {
 .login-box a:hover {
   color: #fff;
 }
+
+.estilotextarea4 {
+  background-color: transparent;
+  border: 1px solid #000000;
+  scrollbar-arrow-color: #000066;
+  scrollbar-base-color: #000033;
+  scrollbar-track-color: #666633;
+  scrollbar-face-color: #cc9933;
+  scrollbar-shadow-color: #DDDDDD;
+  scrollbar-highlight-color: #CCCCCC;}
