@@ -152,51 +152,40 @@
 
 	<tr>
 		
-		<td width="67" align="center">
-			<label for="materias">XXXXXXX</label>
-			<label for="identificaion" name= "Identificacion"value="{{user}}" ></label></a>{{user}} </td>
+		<td><label for="correo">Cambiar Email:</label>
+			<p> <input type="text" name="correo" placeholder="{{user3}}" value="{{user3}}" ></label></a> </span></td>
+			
 		
       <td height="60">&nbsp;</td>
 	
-      <td width="67" align="center">
-		<label for="materias">XXXXXXX</label>
-		<label for="nombre" name= "Nombre"value="{{user1}}"></label>{{user1}}</a> </td>
+      <td>
+		<label for="rol">Editar Privilegio:</label>
+		<p> <select type="text" name="rol"  id="rol"> <span class="error" id="errorMateria"></span></p>
+			{% for rol in lista2 %}
+			<option hidden selected >Seleccione un nuevo Privilegio</option>
+			<option value="{{ rol['rol'] }}">{{ rol['rol'] }}</option>
+			{% endfor %}
+			</select>
 		
     </tr>
 
-
-
-
-
-
     <tr>
       
-		<td><!-- Materia -->
-			<label for="materias">Materia:</label>
-				<p> <select type="text" name="Materias"  id="Materia"> <span class="error" id="errorMateria"></span></p>
-					{% for Materias in lista2 %}
-					<option hidden selected >Seleccione una Materia</option>
-					<option value="{{ Materias['Materias'] }}">{{ Materias['Materias'] }}</option>
-					{% endfor %}
-					</select>
+		<td></td>
 		
       <td height="60">&nbsp;</td>
 		<td>	</td> <!-- ID CURSO -->
     </tr>
     <tr>
     
-		<td><label for="Actividades">Actividades:</label>
-				<p> <select type="text" name="Actividades"  id="Actividad"> <span class="error" id="errorActividad"></span></p>
-				{% for Actividades in lista3 %}
-				<option hidden selected >Seleccione una Actividad</option>
-				<option value="{{ Actividades['nombre_actividad'] }}">{{ Actividades['nombre_actividad'] }}</option>
-				{% endfor %}
-			</select></td>
+		<td>
+		</td>
 		
       <td>&nbsp;</td>
       
-	 <td width="50"><label for="Calificacion">Calificación obtenida:</label>
-		<p><input type="text" name="Calificacion" placeholder="Ingrese la Calificación" > <span class="error" id=""></span></td>	
+	 <td width="50">
+		 
+		</td>	
 		
     </tr>
   </tbody>
@@ -204,8 +193,7 @@
   <table width="200" border="0">
     <tbody>
       <tr>
-        <td><label for="textarea">Comentarios</label>
-        <textarea type="textarea"  name="textarea" cols="65" maxlength="2000" id="textarea" placeholder="Escribe aquí tus comentarios sobre la actividad:" title="comentarios"></textarea></td>
+        
       </tr>
     </tbody>
   </table>

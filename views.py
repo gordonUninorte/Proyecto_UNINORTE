@@ -411,7 +411,7 @@ def edit_admin():
         print("Entre al metodo get")
         db = get_db()
         db.row_factory = sqlite3.Row
-        result2 = db.execute('select * from Materias').fetchall()
+        result2 = db.execute('select * from rol').fetchall()
         result3 = db.execute('select * from Actividades').fetchall()
         db.commit()
         db.close()
@@ -429,11 +429,11 @@ def edit_admin():
         identificacion = escape(request.form['id'])
         Ident = ['Identificacion']       
         db = get_db()
-        resultado=db.execute('select nombre, id_rol from usuarios where identificacion = ? ', (identificacion,)).fetchall()     
-      
+        # resultado=db.execute('select nombre, id_rol from usuarios where identificacion = ? ', (identificacion,)).fetchall()     
+        resultado=db.execute('select * from usuarios where identificacion = ? ', (identificacion,)).fetchall()
 
         db.row_factory = sqlite3.Row
-        result2 = db.execute('select * from Materias').fetchall()
+        result2 = db.execute('select * from rol').fetchall()
         result3 = db.execute('select * from Actividades').fetchall()
         listado2 = []
         for item in result2:
@@ -443,20 +443,22 @@ def edit_admin():
         for item in result3:
             listado3.append({k: item[k] for k in item.keys()})
 
-        Materia = escape(request.form['Materias'])
-        Actividad = escape(request.form['Actividades'])
-        nombre = resultado[0][0] 
-        Identificacion = identificacion
-        Calificacion = escape(request.form['Calificacion'])
-        Comentario = escape(request.form['textarea'])                            
+        rol = escape(request.form['rol'])
+    
+        id_rol=resultado[0][1]
+        nombre = resultado[0][3] 
+        correo=resultado[0][4]
+        password=resultado[0][5]
+        foto=resultado[0][6]
+        Identificacion = identificacion                           
 
-        if Materia != "Seleccione una Materia" and Actividad != "Seleccione una Actividad" and Calificacion !="":
-            db.execute("insert into Evaluar_actividades (id_materias, id_actividades, nombre_estudiante, identificacion_estudiante, calificacion, comentarios) values( ?, ?, ?, ?, ?, ?)",(Materia, Actividad, nombre, Identificacion, Calificacion, Comentario))
-            db.commit()
-            nombre=""
-            identificacion=""
-        db.close()
-        return render_template("editar_usuario.html", user= nombre, user1= identificacion, lista2 = listado2, lista3 = listado3)
+        # if id_rol != "Seleccione un nuevo Privilegio" and correo != "" and password !="":
+        #     db.execute("update Actividades set (id_rol, nombre, correo, password)  ( ?, ?, ?, ?), where",(id_rol, nombre, correo, password))
+        # db.commit()
+        # nombre=""
+        # identificacion=""
+        # db.close()
+        return render_template("editar_usuario.html", user= nombre, user1= identificacion,user3=correo, user4=password, user5=foto,  lista2 = listado2, lista3 = listado3)
 
 
 
