@@ -29,67 +29,43 @@ def home_admin():
     
     return render_template("home_admin.html")
 
-@main.route('/home_estudiantes')
+@main.route('/home_estudiante')
 @login_required
-def home_estudiantes():
+def home_estudiante():
     
     return render_template("home_estudiantes.html")
 
-# @main.route('/actividades_estu')
-# @login_required
-# def actividades_estu():
     
 @main.route('/actividades_estu', methods=('GET', 'POST'))
 @login_required
 def actividades_estu():
-    if request.method == 'GET':       
+    if request.method == 'GET':
+        usua= session['nombre']       
         db = get_db()
         db.row_factory = sqlite3.Row
-        usua= session['nombre']
-        result2 = db.execute('select id_materias from Evaluar_actividades where nombre_estudiante =? ', (usua,)).fetchall()
-        # acti= ['Materias']
-        result3 = db.execute('select * from Actividades').fetchall()
+        result2 = db.execute('select id_materias from Evaluar_actividades where nombre_estudiante =? ', (usua,),).fetchall()
+        result3 = db.execute('select * from actividades ', (usua,),).fetchall()
         db.commit()
         db.close()
-        lista_m = []
+        listado2 = []
         for item in result2:
-            lista_m.append({j: item[j] for j in item.keys()})
-                  
-        lista_a = []
+            listado2.append({j: item[j] for j in item.keys()})
+        listado1 = []
         for item in result3:
-            lista_a.append({k: item[k] for k in item.keys()})
-            return render_template("actividades_estu.html", listam = lista_m, listaA = lista_a)
-
-    if request.method =='POST':
-        materia = escape(request.form['Materias']) 
-        actividad = escape(request.form['Actividades'])        
+            listado1.append({k: item[k] for k in item.keys()})
+        return render_template("actividades_estu2.html", listam2=listado2, listaA=listado1)
+        
+    elif request.method =='POST':
         db = get_db()
-        #llamado a la calificación
         calificacion=db.execute('select calificacion from Evaluar_actividades where id_materias =?', (materia,)).fetchall()
-        calificacion2=db.execute('select calificacion from Evaluar_actividades where id_materias = ? and id_actividades = ?', (materia,) (actividad,)).fetchall()
-        comentario=db.execute('select comentarios from Evaluar_actividades where id_materias = ? and id_actividades = ?', (materia,) (actividad,)).fetchall()
-        # db.row_factory = sqlite3.Row
-        #mete los datos del resultado en una lista
         promedio = 0.00
         for nota in calificacion:
             promedio = promedio + float(nota[0])
-            print(nota[0])
         promedio=promedio/len(calificacion)
-
-        lista_m = []
-        for item in calificacion2:
-            lista_m.append({j: item[j] for j in item.keys()})
-        cali1=lista_m[0]
-
-        lista_a = []
-        for item in comentario:
-            lista_a.append({j: item[j] for j in item.keys()})
-        cali2=lista_a[0]
-            
+        materia = escape(request.form['Materias2']) 
         db.commit()
         db.close()
-        return render_template("actividades_estu.html", prome= promedio, calificacio= cali1,comm=cali2)
-    return render_template("actividades_estu.html")
+        return render_template("actividades_estu.html", mate2= materia,prome= promedio,)
 
 
 
